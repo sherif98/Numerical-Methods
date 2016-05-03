@@ -21,11 +21,10 @@ classdef RootSolver
         % iteration table
         
         % @return precision: last relative error in the calculations
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = Bisection(obj,lower,upper);
-        % how to find g(x)
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = FixedPoint(obj,initialGuess);
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = Newton(obj,initialGuess);
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = FalsePosition(obj,lower,upper);
+        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = Bisection(obj,upper,lower);
+        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = FixedPoint(obj,initialGuess);
+        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = Newton(obj,initialGuess);
+        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = FalsePosition(obj,upper,lower);
         [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = Secant(obj,initialGuess);
         [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = BrigeVeta(obj,initialGuess);
         [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError] = getAllRoots(obj);
