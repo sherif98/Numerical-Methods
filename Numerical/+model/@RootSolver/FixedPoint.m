@@ -11,9 +11,9 @@ aproxRoot = initialGuess;
 % my implementation goes here
 syms x
 df = diff(obj.equation, x);
+df = inline(df);
 temp = initialGuess;
-x = initialGuess;
-if (subs(df) > 1)
+if (df(initialGuess) > 1)
     message = 'Error divergence occurred';
     return;
 end
@@ -30,7 +30,7 @@ for i=1:1:obj.maxNumOfIterations
     temp = initialGuess;
 end
 if (numOfIterations >= obj.maxNumOfIterations)
-    message = 'no root at this precision'
+    message = 'no root at this precision';
 else
     message = 'Success';
 end

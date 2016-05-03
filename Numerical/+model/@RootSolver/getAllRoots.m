@@ -43,8 +43,8 @@ for i=1:(numel(Arr) - 1)
                message = 'Success';
                numOfIterations = [numOfIterations;xNumOfIterations];
                allIteration = [allIteration;xAllIteration];
-               precision = [precision;xPrecision];
-               theoError = [theoError;xTheoError];
+               precision = [precision xPrecision];
+               theoError = [theoError xTheoError];
                xAproxRoot = round(xAproxRoot * numForRound) / numForRound;
                allRoots = [allRoots xAproxRoot];
            
@@ -54,8 +54,8 @@ for i=1:(numel(Arr) - 1)
                    message = 'Success';
                    numOfIterations = [numOfIterations;xNumOfIterations];
                    allIteration = [allIteration;xAllIteration];
-                   precision = [precision;xPrecision];
-                   theoError = [theoError;xTheoError];
+                   precision = [precision xPrecision];
+                   theoError = [theoError xTheoError];
                    xAproxRoot = round(xAproxRoot * numForRound) / numForRound;
                    allRoots = [allRoots xAproxRoot];
                end
