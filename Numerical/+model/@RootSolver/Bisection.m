@@ -1,24 +1,21 @@
 function [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = Bisection(obj,lower,upper)
-% my Implementation goes here
-
-
+% initialization
+% tic
+numOfIterations = 0;
+executionTime = 0;
+allIteration = [];
+precision = 100;
+theoError = 0;
+aproxRoot = 0;
 if ((obj.equation(lower) * obj.equation(upper)) > 0)
     message = 'error';
-    % fill with dummy values
-    numOfIterations = -1;
     return;
 end
-message = 'Success';
 % allIteration = ['Lower','Upper','mid','f(mid)','relativeError'];
-allIteration = [];
-tic
-aproxRoot = (lower + upper) / 2;
-numOfIterations = 0;
-theoError = 0; % tell we know about it
 for i=1:1:obj.maxNumOfIterations
     numOfIterations = numOfIterations + 1;
     mid = (lower + upper) / 2;
-    precision = abs(upper - lower) / lower;
+    precision = (abs(abs(upper - lower) / lower)) * 100;
     test = obj.equation(lower) * obj.equation(mid);
     allIteration = [allIteration;lower,upper,mid,obj.equation(mid),precision];
     aproxRoot = mid;
@@ -35,5 +32,10 @@ for i=1:1:obj.maxNumOfIterations
         break;
     end
 end
-executionTime = toc;
+if (numOfIterations >= obj.maxNumOfIterations)
+   message = 'no root found at this precision';
+else
+    message = 'Success';
+end
+%executionTime = toc;
 end

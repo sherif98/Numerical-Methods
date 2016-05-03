@@ -11,11 +11,12 @@ precision = -1;
 executionTime = 0;
 message = 'Success';
 theoError = 0;
+
 for i=1:1:obj.maxNumOfIterations
     numOfIterations = numOfIterations + 1;
     x = previous;
     var = previous - ((obj.equation(previous) / subs(df)));
-    precision = (abs(var - previous)) / var;
+    precision = (abs(abs(var - previous) / var)) * 100;
     allIteration = [allIteration;previous,var,precision];
     if (precision <= obj.precision)
         aproxRoot = var;
