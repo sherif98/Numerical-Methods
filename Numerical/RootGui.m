@@ -145,8 +145,9 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
        case 'false',   
             [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.FalsePosition(lower, upper);
            if(strcmp(message, 'Success'))
-              a = [executionTime precision theoError numOfIterations aproxRoot];
-              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
               fplot(f,[lower,upper]);
@@ -157,13 +158,14 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
       case 'fixed',   
             [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.FixedPoint(lower);
            if(strcmp(message, 'Success'))
-              a = [executionTime precision theoError numOfIterations aproxRoot];
-              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'guess', 'relativeError'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
               str = '@(x)x';
               g = str2func(str);
-               fplot(f,[lower,upper]);
+              fplot(f,[lower,upper]);
               hold on
                fplot(g,[lower,upper]);
                hold off
@@ -174,8 +176,9 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
       case 'secant',          
            [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Secant(lower, upper);
            if(strcmp(message, 'Success'))
-              a = [executionTime precision theoError numOfIterations aproxRoot];
-              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'firstGuess','secondGuess','precision'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
               syms x;
@@ -190,8 +193,9 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
             
            [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.BrigeVeta(lower);
            if(strcmp(message, 'Success'))
-              a = [executionTime precision theoError numOfIterations aproxRoot];
-              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'a','b','c'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
              fplot(f,[lower upper]);
@@ -201,8 +205,9 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
      case 'general',
           [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.getAllRoots(lower, upper);
            if(strcmp(message, 'Success'))
-              a = [theoError;precision];
-              set(handles.output2, 'Data', a);
+              rownames = {'TE','P','R','N'};
+              a = [theoError;precision;aproxRoot;numOfIterations];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
              fplot(f,[lower upper]);
@@ -227,8 +232,9 @@ column_name = {'Execution Time','Precision','Theoretical Error','Number Of Itera
       case 'bisection', 
            [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Bisection(lower, upper);
            if(strcmp(message, 'Success'))
-              a = [executionTime precision theoError numOfIterations aproxRoot];
-              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
               columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
               set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
               fplot(f,[lower,upper]);

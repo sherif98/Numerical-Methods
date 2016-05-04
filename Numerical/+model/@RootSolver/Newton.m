@@ -15,7 +15,6 @@ theoError = 0;
 
 for i=1:1:obj.maxNumOfIterations
     numOfIterations = numOfIterations + 1;
-    %x = previous;
     var = previous - ((obj.equation(previous) / df(previous)));
     precision = (abs(abs(var - previous) / var)) * 100;
     allIteration = [allIteration;previous,var,precision];

@@ -13,7 +13,8 @@ syms x
 df = diff(obj.equation, x);
 df = inline(df);
 temp = initialGuess;
-if (df(initialGuess) > 1)
+% check if g'(x) must be less than 1
+if (abs(df(initialGuess)) > 1)
     message = 'Error divergence occurred';
     return;
 end

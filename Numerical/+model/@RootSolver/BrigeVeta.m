@@ -10,6 +10,7 @@ aproxRoot = initialGuess;
 
 % implementation
 g = sym(obj.equation);
+% get the coefficients of the polynomial
 coefficients = sym2poly(g);
 temp = initialGuess;
 for itr=1:obj.maxNumOfIterations
