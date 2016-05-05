@@ -3,7 +3,7 @@ classdef Interpolation
     %   Detailed explanation goes here
     
     properties
-        points = []; % example [1,2;1,3] first point = x= points(1,1); f(x)=points(1,2)
+        points = []; % example [1,2;1,3] first point = 1,2 second 1,3
     end
     
     methods
