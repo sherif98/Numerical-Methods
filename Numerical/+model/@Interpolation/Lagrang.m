@@ -25,7 +25,8 @@ for i = 1 : 1 : sz
 end
 sz = size(queries);
 for i = 1 : 1 : sz(2)
-    solution = [solution,polynomial(queries(i))];
+    val = polynomial(queries(i));
+    solution = [solution,double(val)];
 end
 message = 'Success';
 exeTime = toc(exeTime);
