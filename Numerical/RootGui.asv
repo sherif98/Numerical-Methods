@@ -27,11 +27,11 @@ function varargout = RootGui(varargin)
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-    'gui_Singleton',  gui_Singleton, ...
-    'gui_OpeningFcn', @RootGui_OpeningFcn, ...
-    'gui_OutputFcn',  @RootGui_OutputFcn, ...
-    'gui_LayoutFcn',  [] , ...
-    'gui_Callback',   []);
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @RootGui_OpeningFcn, ...
+                   'gui_OutputFcn',  @RootGui_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -63,7 +63,7 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = RootGui_OutputFcn(hObject, eventdata, handles)
+function varargout = RootGui_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning o args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -140,160 +140,118 @@ pre = get(handles.pre, 'String');
 pre = str2num(pre);
 solver = RootSolver(f, iter, pre);
 column_name = {'Execution Time','Precision','Theoretical Error','Number Of Iterations','Roots'};
-switch get(get(handles.method_selector,'SelectedObject'),'Tag')
-    
-    case 'false',
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.FalsePosition(lower, upper);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N','Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            fplot(f,[lower,upper]);
-            %line([lower lower],[1 100]);
-            % line([upper upper],[1 100]);
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-        
-    case 'fixed',
-        equ2 = strcat(equ, '+x');
-        f2 = str2func(equ2);
-        solver2 = RootSolver(f2, iter, pre);
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver2.FixedPoint(lower);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N','Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'guess', 'relativeError'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            str = '@(x)x';
-            g = str2func(str);
-            fplot(f2,[lower,upper]);
-            hold on
-            fplot(g,[lower,upper]);
-            hold off
-            %line([lower lower],[1 100]);
-            % line([upper upper],[1 100]);
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-        
-    case 'secant',
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Secant(lower, upper);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N','Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'firstGuess','secondGuess','precision'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            syms x;
-            df = diff(f, x);
-            g = inline(df);
-            fplot(f,[lower upper]);
-            hold on
-            fplot(g,[lower upper]);
-            hold off
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-    case 'veta',
-        
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.BrigeVeta(lower);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N','Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'a','b','c'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            %fplot(f,[lower upper]);
-            syms x;
-            df = diff(f, x);
-            g = inline(df);
-            fplot(f,[lower upper]);
-            hold on
-            fplot(g,[lower upper]);
-            hold off
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-        
-        
-    case 'general',
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.getAllRoots(lower, upper);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N', 'Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            %fplot(f,[lower upper]);
-            syms x;
-            df = diff(f, x);
-            g = inline(df);
-            fplot(f,[lower upper]);
-            hold on
-            fplot(g,[lower upper]);
-            hold off
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-        
-        
-    case 'newton',
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Newton(lower);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            a = [executionTime precision theoError numOfIterations aproxRoot];
-            set(handles.output2, 'Data', a, 'ColumnName', column_name);
-            columnname = {'previous', 'current', 'precision'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            syms x;
-            df = diff(f, x);
-            g = inline(df);
-            fplot(f,[lower upper]);
-            hold on
-            fplot(g,[lower upper]);
-            hold off
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-    case 'bisection',
-        [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Bisection(lower, upper);
-        set(handles.out_msg, 'String', message);
-        if(strcmp(message, 'Success'))
-            rownames = {'TE','P','R','N','Ex'};
-            a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
-            set(handles.output2, 'Data', a, 'RowName',rownames);
-            columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
-            set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
-            fplot(f,[lower,upper]);
-            %line([lower lower],[1 100]);
-            % line([upper upper],[1 100]);
-        else
-            a = [];
-            set(handles.output2, 'Data', a);
-            set(handles.output, 'Data', a);
-        end
-end
+ switch get(get(handles.method_selector,'SelectedObject'),'Tag')
+     
+       case 'false',   
+            [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.FalsePosition(lower, upper);
+            set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+              fplot(f,[lower,upper]);
+              %line([lower lower],[1 100]);
+              % line([upper upper],[1 100]);
+           end
+           
+      case 'fixed',   
+            equ2 = strcat(equ, '+x');
+            f2 = str2func(equ2);
+            solver2 = RootSolver(f2, iter, pre);
+            [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver2.FixedPoint(lower);
+             set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'guess', 'relativeError'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+              str = '@(x)x';
+              g = str2func(str);
+              fplot(f2,[lower,upper]);
+              hold on
+               fplot(g,[lower,upper]);
+               hold off
+              %line([lower lower],[1 100]);
+              % line([upper upper],[1 100]);
+           end
+     
+      case 'secant',          
+           [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Secant(lower, upper);
+            set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'firstGuess','secondGuess','precision'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+              syms x;
+              df = diff(f, x);
+              g = inline(df);
+              fplot(f,[lower upper]);
+              hold on
+              fplot(g,[lower upper]);
+              hold off
+           end
+      case 'veta',  
+            
+           [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.BrigeVeta(lower);
+            set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'a','b','c'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+             fplot(f,[lower upper]);
+           end
+          
+           
+     case 'general',
+          [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.getAllRoots(lower, upper);
+           set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N', 'Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+             fplot(f,[lower upper]);
+           end
+         
+         
+      case 'newton',  
+          [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Newton(lower);
+           set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              a = [executionTime precision theoError numOfIterations aproxRoot];
+              set(handles.output2, 'Data', a, 'ColumnName', column_name);
+              columnname = {'previous', 'current', 'precision'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+              syms x;
+              df = diff(f, x);
+              g = inline(df);
+              fplot(f,[lower upper]);
+              hold on
+              fplot(g,[lower upper]);
+              hold off
+           end
+      case 'bisection', 
+           [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = solver.Bisection(lower, upper);
+            set(handles.out_msg, 'String', message);
+           if(strcmp(message, 'Success'))
+              rownames = {'TE','P','R','N','Ex'};
+              a = [theoError;precision;aproxRoot;numOfIterations;executionTime];
+              set(handles.output2, 'Data', a, 'RowName',rownames);
+              columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
+              set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
+              fplot(f,[lower,upper]);
+              %line([lower lower],[1 100]);
+              % line([upper upper],[1 100]);
+           end
+  end
 
 
 
@@ -481,8 +439,8 @@ function import_Callback(hObject, eventdata, handles)
 
 file = fopen([PathName FileName]);
 firstline = fgets(file);
-set(handles.input_equation,'String',firstline);
-
+set(handles.FunTB,'string',firstline);
+e
 
 function pre_ans_Callback(hObject, eventdata, handles)
 % hObject    handle to pre_ans (see GCBO)

@@ -1,12 +1,12 @@
 function [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = Secant(obj,firstGuess,secondGuess)
 % initialization
-tic
+executionTime = tic;
 numOfIterations = 0;
 allIteration = [];
 precision = 100;
 theoError = 0;
 aproxRoot = secondGuess;
-executionTime = 0;
+%executionTime = 0;
 % implementation
 temp = secondGuess;
 for i=2:1:obj.maxNumOfIterations
@@ -26,5 +26,5 @@ if (numOfIterations >= obj.maxNumOfIterations)
 else
     message = 'Success';
 end
-executionTime = toc;
+executionTime = toc(executionTime);
 end

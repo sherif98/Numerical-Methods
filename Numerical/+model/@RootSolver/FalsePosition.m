@@ -1,7 +1,15 @@
 function [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = FalsePosition(obj,lower,upper)
+% initialization
+% tic
+numOfIterations = 0;
+executionTime = tic;
+allIteration = [];
+precision = 100;
+theoError = 0;
+aproxRoot = 0;
 % Implementation goes here
 if ((obj.equation(lower) * obj.equation(upper)) > 0)
-    message = 'error';
+    message = 'no root in this region';
     % fill with dummy values
     numOfIterations = -1;
     return;
@@ -9,9 +17,9 @@ end
 message = 'Success';
 % allIteration = ['Lower','Upper','mid','f(mid)','relativeError'];
 allIteration = [];
-tic
 aproxRoot = ((lower * obj.equation(upper)) - (upper * obj.equation(lower))) / (obj.equation(upper) - obj.equation(lower));
 numOfIterations = 0;
+executionTime = tic;
 theoError = 0; % tell we know about it
 for i=1:1:obj.maxNumOfIterations
     numOfIterations = numOfIterations + 1;
@@ -33,7 +41,7 @@ for i=1:1:obj.maxNumOfIterations
         break;
     end
 end
-executionTime = toc;
+executionTime = toc(executionTime);
 if (numOfIterations >= obj.maxNumOfIterations)
     message = 'no root found to desired tolerance';
 end
