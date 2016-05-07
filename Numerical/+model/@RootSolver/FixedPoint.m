@@ -1,8 +1,7 @@
 function [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoError,message] = FixedPoint(obj,initialGuess)
 % initialization
-tic
 numOfIterations = 0;
-executionTime = 0;
+executionTime = tic;
 allIteration = [];
 precision = 100;
 theoError = 0;
@@ -16,7 +15,6 @@ temp = initialGuess;
 % check if g'(x) must be less than 1
 if (abs(df(initialGuess)) > 1)
     message = 'Error divergence occurred';
-    return;
 end
 allIteration = [allIteration;initialGuess,precision];
 for i=1:1:obj.maxNumOfIterations
@@ -31,9 +29,9 @@ for i=1:1:obj.maxNumOfIterations
     temp = initialGuess;
 end
 if (numOfIterations >= obj.maxNumOfIterations)
-    message = 'no root at this precision';
+    message = strcat(message, 'no root at this precision');
 else
     message = 'Success';
 end
-executionTime = toc;
+executionTime = toc(executionTime);
 end

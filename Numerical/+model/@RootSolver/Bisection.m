@@ -2,7 +2,7 @@ function [numOfIterations,executionTime,allIteration,aproxRoot,precision,theoErr
 % initialization
 % tic
 numOfIterations = 0;
-executionTime = 0;
+executionTime = tic;
 allIteration = [];
 precision = 100;
 theoError = 0;
@@ -37,5 +37,5 @@ if (numOfIterations >= obj.maxNumOfIterations)
 else
     message = 'Success';
 end
-%executionTime = toc;
+executionTime = toc(executionTime);
 end
