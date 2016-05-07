@@ -15,8 +15,8 @@ classdef Interpolation
         % @return polynomail: The output equation
         % @return solution: array for each query in the same order
         % @return exeTime: the time of performing the calculation
-        % @return message: an string equal to sucess or error massage
-        [exeTime,polynomial,solution] = Newton(obj, queries);
+        % @return message: a string equal to success or error massage
+        [exeTime,polynomial,solution,message] = Newton(obj, queries);
         [exeTime,polynomial,solution,message] = Lagrang(obj, queries);
     end 
 end

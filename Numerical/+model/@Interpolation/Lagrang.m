@@ -7,7 +7,7 @@ solution = [];
 syms x;
 polynomial = symfun(0,x);
 if sz(2) ~= 2
-    message = 'not valid points';
+    message = 'not valid points';   
     return;
 end
 sz = sz(1);
