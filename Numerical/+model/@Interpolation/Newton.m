@@ -10,6 +10,8 @@ function [exeTime,polynomial,solution,message] = Newton(obj, queries)
     
     tic;
     syms x;
+    lBound = realmax;
+    uBound = realmin;
     polynomial = symfun(0 * x, x);
     
     % newton table
@@ -19,6 +21,8 @@ function [exeTime,polynomial,solution,message] = Newton(obj, queries)
     for i = 1 : numberOfPoints(1)
         newtonTable(i,1) = obj.points(i,1);
         newtonTable(i,2) = obj.points(i,2);
+        lBound = min(lBound, obj.points(i,1));
+        uBound = max(uBound, obj.points(i,1));
     end
     
     % creating newton table
@@ -39,13 +43,18 @@ function [exeTime,polynomial,solution,message] = Newton(obj, queries)
     end
     
     % interpolation
+    message = 'success';
     numberOfQueries = size(queries);
     solution = zeros(1, numberOfQueries(2));
     for i = 1 : numberOfQueries(2)
-        solution(i) = polynomial(queries(i));
+        if queries(i) > uBound || queries(i) < lBound
+            solution(i) = nan;
+            message = ['querying stopped : extrapolation. last at x = ', num2str(queries(i))];
+        else
+            solution(i) = polynomial(queries(i));
+        end
     end
     
     exeTime = toc;
-    message = 'success';
     
 end

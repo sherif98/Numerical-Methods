@@ -192,9 +192,15 @@ drawnow();
 
 % applying interpolation to queries
 data=get(handles.uitable2, 'data');
-for index = 1 : queriesTableSize(1)
-    data(index, 2) = {solution(index)};
+solutionArraySize = size(solution);
+for index = 1 : solutionArraySize(2)
+    if ~isnan(solution(index))
+        data(index, 2) = {solution(index)};
+    else
+        data(index, 2) = {'   undefined'};
+    end
 end
+solution
 set(handles.uitable2, 'data', data);
 drawnow();
 
@@ -206,6 +212,20 @@ if lBound ~= uBound && lBound ~= realmax
     ezplot(polynomial, [lBound, uBound]);
 end
 drawnow();
+hold;
+% draw points
+for i = 1 : pointsTableSize(1)
+    scatter(points(i,1), points(i,2), 100, [0 0 1], 'filled');
+end
+% draw queries
+for i = 1 : solutionArraySize(2)
+    if ~isnan(solution(1, i))
+        scatter(queries(1, i), solution(1, i), 100, 200, 'filled');
+    end
+end
+hold;
+
+
 
 
 
@@ -246,9 +266,15 @@ drawnow();
 
 % applying interpolation to queries
 data=get(handles.uitable2, 'data');
-for index = 1 : queriesTableSize(1)
-    data(index, 2) = {solution(index)};
+solutionArraySize = size(solution);
+for index = 1 : solutionArraySize(2)
+    if ~isnan(solution(index))
+        data(index, 2) = {solution(index)};
+    else
+        data(index, 2) = {'   undefined'};
+    end
 end
+solution
 set(handles.uitable2, 'data', data);
 drawnow();
 
@@ -260,6 +286,19 @@ if lBound ~= uBound && lBound ~= realmax
     ezplot(polynomial, [lBound, uBound]);
 end
 drawnow();
+hold;
+% draw points
+for i = 1 : pointsTableSize(1)
+    scatter(points(i,1), points(i,2), 100, [0 0 1], 'filled');
+end
+% draw queries
+for i = 1 : solutionArraySize(2)
+    if ~isnan(solution(1, i))
+        scatter(queries(1, i), solution(1, i), 100, 200, 'filled');
+    end
+end
+hold;
+
 
 
 % --- Executes on button press in pushbutton4.
