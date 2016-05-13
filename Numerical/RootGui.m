@@ -152,6 +152,10 @@ switch get(get(handles.method_selector,'SelectedObject'),'Tag')
             columnname = {'Lower','Upper','mid','f(mid)','relativeError'};
             set(handles.output, 'Data', allIteration, 'ColumnName', columnname);
             fplot(f,[lower,upper]);
+             xL = xlim;
+            yL = ylim;
+            line(xL, [0 0],'color','k','linewidth',1.5) %x-axis
+            line([0 0], yL,'color','k','linewidth',1.5) %y-axis
             %line([lower lower],[1 100]);
             % line([upper upper],[1 100]);
         else
@@ -288,6 +292,10 @@ switch get(get(handles.method_selector,'SelectedObject'),'Tag')
             fplot(f,[lower,upper]);
             %line([lower lower],[1 100]);
             % line([upper upper],[1 100]);
+            xL = xlim;
+            yL = ylim;
+            line(xL, [0 0],'color','k','linewidth',1.5) %x-axis
+            line([0 0], yL,'color','k','linewidth',1.5) %y-axis
         else
             a = [];
             set(handles.output2, 'Data', a);
